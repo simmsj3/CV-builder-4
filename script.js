@@ -67,6 +67,7 @@ const quests = {
             skillTree: "Professional Skills",
             reason: "This meeting helps you understand the placement process and align your career goals.",
             url: "https://www.aston.ac.uk/careers/contact-us",
+            imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image6.jpg", //placement coord
             year: 2
         },
         {
@@ -76,6 +77,7 @@ const quests = {
             skillTree: "Professional Skills",
             reason: "These workshops provide essential information and skills for securing and succeeding in your placement.",
             url: "https://www.aston.ac.uk/careers/placements",
+            imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image7.jpg", //Placement workshops
             year: 2
         },
         {
@@ -85,6 +87,7 @@ const quests = {
             skillTree: "Networking & Communication",
             reason: "Career fairs provide opportunities to make connections with potential employers.",
             url: "https://www.aston.ac.uk/careers/find-a-job/researching-employers",
+            imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image8.jpg", //Careers fare
             year: 2
         }
     ],
@@ -96,6 +99,7 @@ const quests = {
             skillTree: "Professional Skills",
             reason: "Applying for graduate programmes helps you transition from university to professional life.",
             url: "https://www.aston.ac.uk/careers/find-a-job/researching-employers",
+            imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image9.jpg", //grad schemes
             year: 4
         },
         {
@@ -105,6 +109,7 @@ const quests = {
             skillTree: "Professional Skills",
             reason: "Career consultants provide valuable guidance on your career path and job search strategies.",
             url: "https://www.aston.ac.uk/careers/contact-us",
+            imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image6.jpg", //placement coord
             year: 4
         },
         {
@@ -114,6 +119,7 @@ const quests = {
             skillTree: "Networking & Communication",
             reason: "Alumni connections can provide insights into different career paths and potential job opportunities.",
             url: "https://www.aston.ac.uk/careers/cv/cvs-and-cover-letters",
+            imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image10.jpg", //allumnus
             year: 4
         }
     ],
@@ -129,6 +135,7 @@ const quests = {
                 { name: "Skills need improving", url: "https://www.aston.ac.uk/current-students/support-services/disability-support/resources" },
                 { name: "Polishing overall skills", url: "https://www.aston.ac.uk/current-students/learning-development-centre/academic-writing-and-study-support" }
             ],
+            imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image11.jpg", //skills develop
             year: "anytime"
         },
         {
@@ -138,6 +145,7 @@ const quests = {
             skillTree: "Networking & Communication",
             reason: "A strong professional online presence showcases your seriousness about your career.",
             url: "https://www.aston.ac.uk/careers/cv/cvs-and-cover-letters",
+            imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image12.jpg", //linkedin
             year: "anytime"
         }
     ]

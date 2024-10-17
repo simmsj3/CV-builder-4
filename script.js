@@ -134,6 +134,211 @@ const quests = {
 };
 
 
+let completedQuests = JSON.parse(localStorage.getItem('completedQuests')) || {};
+let skillsProgress = JSON.parse(localStorage.getItem('skillsProgress')) || [];
+let incompleteQuests = JSON.parse(localStorage.getItem('incompleteQuests')) || {}; // Store incomplete quests
+
+// Show quests based on the selected year
+function showQuests(year) {
+    const questArea = document.getElementById('quest-area');
+    const skillsArea = document.getElementById('skills-progress-area');
+    skillsArea.style.display = "none";
+    questArea.style.display = "block";
+    questArea.innerHTML = ''; // Clear existing quests
+
+    let filteredQuests = quests[year] || [];
+
+    // Add incomplete quests from the previous year if available, but don't display them in the previous year again
+    if (year > 1 && incompleteQuests[year - 1]) {
+        filteredQuests = filteredQuests.concat(incompleteQuests[year - 1]);
+    }
+
+    filteredQuests.forEach(quest => {
+        const questDiv = document.createElement('div');
+        const questEntries = completedQuests[quest.title] || [];
+        const entryCount = questEntries.length > 0 ? `(${questEntries.length} Entries)` : '';
+
+        questDiv.innerHTML = `
+            <h4>${quest.title} ${entryCount}</h4>
+            <p><strong>Type:</strong> ${quest.type}</p>
+            <p>${quest.description}</p>
+            <p><strong>Skills Developed:</strong> ${quest.skillTree}</p>
+            <p><strong>Why it's Important:</strong> ${quest.reason}</p>
+            <a href="${quest.url}" target="_blank">Learn More</a>
+            <br><br>
+            <button onclick="openModal('${quest.title}')">Mark as Completed</button>
+        `;
+        questArea.appendChild(questDiv);
+    });
+}
+
+// Modal handling
+const modal = document.getElementById("modal");
+const modalClose = document.getElementById("modal-close");
+const skillsForm = document.getElementById('skills-form');
+const completionDateInput = document.getElementById('completion-date');
+
+modalClose.onclick = function() {
+    modal.style.display = "none";
+    skillsForm.innerHTML = ''; // Clear form when modal is closed
+};
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+        skillsForm.innerHTML = ''; // Clear form when modal is closed
+    }
+};
+
+function openModal(questTitle) {
+    modal.style.display = "block";
+
+    // Clear and set up the skills form
+    skillsForm.innerHTML = `
+        <label for="completion-date">Completion Date:</label>
+        <input type="date" id="completion-date" name="completion-date">
+        <h4>Select Skills Demonstrated</h4>
+        <input type="checkbox" id="academic-excellence" name="skills" value="Academic Excellence">
+        <label for="academic-excellence">Academic Excellence</label><br>
+        <input type="checkbox" id="professional-skills" name="skills" value="Professional Skills">
+        <label for="professional-skills">Professional Skills</label><br>
+        <input type="checkbox" id="leadership-teamwork" name="skills" value="Leadership & Teamwork">
+        <label for="leadership-teamwork">Leadership & Teamwork</label><br>
+        <input type="checkbox" id="technical-proficiency" name="skills" value="Technical Proficiency">
+        <label for="technical-proficiency">Technical Proficiency</label><br>
+        <input type="checkbox" id="networking-communication" name="skills" value="Networking & Communication">
+        <label for="networking-communication">Networking & Communication</label><br>
+    `;
+
+    const saveBtn = document.createElement('button');
+    saveBtn.type = 'button';
+    saveBtn.textContent = 'Save';
+    saveBtn.id = 'save-completion';
+    skillsForm.appendChild(saveBtn);
+
+    document.getElementById('save-completion').onclick = function() {
+        completeQuest(questTitle);
+    };
+}
+
+// Dynamically add freeform textboxes for each skill
+skillsForm.onchange = function() {
+    const checkedSkills = Array.from(document.querySelectorAll('input[name="skills"]:checked')).map(el => el.value);
+    let freeformHtml = '';
+
+    checkedSkills.forEach(skill => {
+        freeformHtml += `
+            <div>
+                <label for="evidence-${skill}"><strong>${skill} Evidence:</strong></label><br>
+                <textarea id="evidence-${skill}" rows="3" cols="50" placeholder="Provide evidence for how you demonstrated ${skill}."></textarea>
+                <p><em>Write about specific actions or achievements related to ${skill}. For example, explain how you applied the skill in the task, what impact you made, or any challenges you overcame.</em></p>
+            </div>
+        `;
+    });
+
+    skillsForm.innerHTML += freeformHtml; // Append textboxes for selected skills
+};
+
+// Mark quest as complete
+function completeQuest(questTitle) {
+    const completionDate = document.getElementById('completion-date').value;
+    const skillsSelected = Array.from(document.querySelectorAll('input[name="skills"]:checked')).map(el => el.value);
+    const evidence = skillsSelected.map(skill => ({
+        skill: skill,
+        evidence: document.getElementById(`evidence-${skill}`).value
+    }));
+
+    if (!completedQuests[questTitle]) {
+        completedQuests[questTitle] = [];
+    }
+
+    completedQuests[questTitle].push({
+        date: completionDate,
+        skills: skillsSelected,
+        evidence: evidence
+    });
+
+    localStorage.setItem('completedQuests', JSON.stringify(completedQuests));
+
+    // Remove from incomplete tasks if it exists
+    Object.keys(incompleteQuests).forEach(year => {
+        incompleteQuests[year] = incompleteQuests[year].filter(quest => quest.title !== questTitle);
+    });
+
+    localStorage.setItem('incompleteQuests', JSON.stringify(incompleteQuests));
+
+    updateSkillsProgress(skillsSelected, evidence);
+    modal.style.display = "none";
+    showQuests('year1'); // Refresh the quest list
+}
+
+// Update skill progress based on completed quest
+function updateSkillsProgress(skills, evidence) {
+    skills.forEach(skill => {
+        skillsProgress.push({ skill: skill, evidence: evidence });
+    });
+    localStorage.setItem('skillsProgress', JSON.stringify(skillsProgress));
+}
+
+// Save incomplete quests and roll them over to the next year
+function saveIncompleteQuests() {
+    Object.keys(quests).forEach(year => {
+        if (!incompleteQuests[year]) incompleteQuests[year] = [];
+
+        const yearQuests = quests[year];
+        yearQuests.forEach(quest => {
+            if (!completedQuests[quest.title]) {
+                incompleteQuests[year].push(quest);
+            }
+        });
+    });
+    localStorage.setItem('incompleteQuests', JSON.stringify(incompleteQuests));
+}
+
+// Show Skills Progress tab
+document.getElementById('skills-tab-btn').addEventListener('click', function() {
+    const skillsContent = document.getElementById('skills-content');
+    const questArea = document.getElementById('quest-area');
+    const skillsArea = document.getElementById('skills-progress-area');
+    questArea.style.display = "none";
+    skillsArea.style.display = "block";
+
+    skillsContent.innerHTML = ''; // Clear existing skills
+
+    if (skillsProgress.length === 0) {
+        skillsContent.innerHTML = '<p>No skills recorded yet.</p>';
+    } else {
+        skillsProgress.forEach((progress, index) => {
+            const skillDiv = document.createElement('div');
+            skillDiv.innerHTML = `
+                <p><strong>Skill:</strong> ${progress.skill}</p>
+                <p><strong>Evidence:</strong> ${progress.evidence.map(e => e.evidence).join(', ')}</p>
+            `;
+            skillsContent.appendChild(skillDiv);
+        });
+    }
+});
+
+// Load the quests for the selected year
+document.getElementById('year1-btn').addEventListener('click', () => showQuests('year1'));
+document.getElementById('year2-btn').addEventListener('click', () => {
+    saveIncompleteQuests(); // Save incomplete tasks before moving to the next year
+    showQuests('year2');
+});
+document.getElementById('year4-btn').addEventListener('click', () => {
+    saveIncompleteQuests();
+    showQuests('year4');
+});
+document.getElementById('anytime-btn').addEventListener('click', () => showQuests('anytime'));
+
+window.onload = function() {
+    showQuests('year1'); // Default view is Year 1 quests
+};
+
+
+
+
+
 
 let completedQuests = JSON.parse(localStorage.getItem('completedQuests')) || {};
 let skillsProgress = JSON.parse(localStorage.getItem('skillsProgress')) || [];

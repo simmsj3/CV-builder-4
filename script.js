@@ -12,6 +12,7 @@ const quests = {
             skillTree: "Leadership & Teamwork",
             reason: "Volunteering shows commitment to your community and your field. It can provide hands-on experience in scientific or healthcare settings.",
             url: "https://www.aston.ac.uk/careers/get-experience/part-time-jobs-and-volunteering",
+            imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image1.jpg", //volunteer
             year: 1
         },
         {

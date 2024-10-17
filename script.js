@@ -135,10 +135,14 @@ const quests = {
 
 
 let completedQuests = JSON.parse(localStorage.getItem('completedQuests')) || [];
+let skillsProgress = JSON.parse(localStorage.getItem('skillsProgress')) || [];
 
 // Show quests based on the selected year
 function showQuests(year) {
     const questArea = document.getElementById('quest-area');
+    const skillsArea = document.getElementById('skills-progress-area');
+    skillsArea.style.display = "none";
+    questArea.style.display = "block";
     questArea.innerHTML = ''; // Clear existing quests
     const filteredQuests = quests[year];
 
@@ -153,63 +157,77 @@ function showQuests(year) {
             <p><strong>Why it's Important:</strong> ${quest.reason}</p>
             <a href="${quest.url}" target="_blank">Learn More</a>
             <br><br>
-            <button onclick="completeQuest('${quest.title}')">Mark as Completed</button>
+            <button onclick="openModal('${quest.title}')">Mark as Completed</button>
         `;
         questArea.appendChild(questDiv);
     });
 }
 
-// Mark quest as complete
-function completeQuest(questTitle) {
-    const completionDate = prompt('Enter the completion date (YYYY-MM-DD):');
-    completedQuests.push({ title: questTitle, date: completionDate });
-    localStorage.setItem('completedQuests', JSON.stringify(completedQuests));
-    updateProgress();
-    showQuests('year1'); // Reload quests to show updated status
-}
+// Modal handling
+const modal = document.getElementById("modal");
+const modalClose = document.getElementById("modal-close");
 
-// Update skill progress based on completed quests
-function updateProgress() {
-    const skillProgress = {
-        "Academic Excellence": 0,
-        "Professional Skills": 0,
-        "Leadership & Teamwork": 0,
-        "Technical Proficiency": 0,
-        "Networking & Communication": 0
-    };
+modalClose.onclick = function() {
+    modal.style.display = "none";
+};
 
-    completedQuests.forEach(completedQuest => {
-        const questData = findQuestByTitle(completedQuest.title);
-        if (questData) {
-            skillProgress[questData.skillTree]++;
-        }
-    });
-
-    updateProgressBars(skillProgress);
-}
-
-// Update progress bars
-function updateProgressBars(skillProgress) {
-    const totalQuests = completedQuests.length;
-    document.getElementById('academic-progress').textContent = `Academic Excellence: ${skillProgress['Academic Excellence']}%`;
-    document.getElementById('professional-progress').textContent = `Professional Skills: ${skillProgress['Professional Skills']}%`;
-    document.getElementById('leadership-progress').textContent = `Leadership & Teamwork: ${skillProgress['Leadership & Teamwork']}%`;
-    document.getElementById('technical-progress').textContent = `Technical Proficiency: ${skillProgress['Technical Proficiency']}%`;
-    document.getElementById('networking-progress').textContent = `Networking & Communication: ${skillProgress['Networking & Communication']}%`;
-
-    // Update the visual bar width (example logic)
-    document.getElementById('academic-progress').style.width = `${(skillProgress['Academic Excellence'] / totalQuests) * 100}%`;
-    // Do the same for other progress bars
-}
-
-// Find quest by title (helper function)
-function findQuestByTitle(title) {
-    for (let year in quests) {
-        const quest = quests[year].find(q => q.title === title);
-        if (quest) return quest;
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
     }
-    return null;
+};
+
+function openModal(questTitle) {
+    modal.style.display = "block";
+    document.getElementById('save-completion').onclick = function() {
+        completeQuest(questTitle);
+    };
 }
+
+function completeQuest(questTitle) {
+    const completionDate = document.getElementById('completion-date').value;
+    const skillsSelected = Array.from(document.querySelectorAll('input[name="skills"]:checked')).map(el => el.value);
+    const evidence = document.getElementById('evidence-text').value;
+
+    completedQuests.push({ title: questTitle, date: completionDate, skills: skillsSelected, evidence: evidence });
+    localStorage.setItem('completedQuests', JSON.stringify(completedQuests));
+    
+    updateSkillsProgress(skillsSelected, evidence);
+    modal.style.display = "none";
+    showQuests('year1'); // Refresh the quest list
+}
+
+// Update skill progress based on completed quest
+function updateSkillsProgress(skills, evidence) {
+    skills.forEach(skill => {
+        skillsProgress.push({ skill: skill, evidence: evidence });
+    });
+    localStorage.setItem('skillsProgress', JSON.stringify(skillsProgress));
+}
+
+// Show Skills Progress tab
+document.getElementById('skills-tab-btn').addEventListener('click', function() {
+    const skillsContent = document.getElementById('skills-content');
+    const questArea = document.getElementById('quest-area');
+    const skillsArea = document.getElementById('skills-progress-area');
+    questArea.style.display = "none";
+    skillsArea.style.display = "block";
+
+    skillsContent.innerHTML = ''; // Clear existing skills
+
+    if (skillsProgress.length === 0) {
+        skillsContent.innerHTML = '<p>No skills recorded yet.</p>';
+    } else {
+        skillsProgress.forEach((progress, index) => {
+            const skillDiv = document.createElement('div');
+            skillDiv.innerHTML = `
+                <p><strong>Skill:</strong> ${progress.skill}</p>
+                <p><strong>Evidence:</strong> ${progress.evidence}</p>
+            `;
+            skillsContent.appendChild(skillDiv);
+        });
+    }
+});
 
 // Load the quests for the selected year
 document.getElementById('year1-btn').addEventListener('click', () => showQuests('year1'));
@@ -218,6 +236,5 @@ document.getElementById('year4-btn').addEventListener('click', () => showQuests(
 document.getElementById('anytime-btn').addEventListener('click', () => showQuests('anytime'));
 
 window.onload = function() {
-    updateProgress(); // Load progress when page loads
     showQuests('year1'); // Default view is Year 1 quests
 };

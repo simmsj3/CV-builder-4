@@ -396,6 +396,7 @@ function updateSkillsProgress(skills, evidence) {
 }
 
 // Function to calculate skill progress
+// Function to calculate skill progress
 function calculateSkillProgress() {
     const skillCounts = {
         "Academic Excellence": 0,
@@ -408,15 +409,19 @@ function calculateSkillProgress() {
     };
 
     skillsProgress.forEach(entry => {
-        entry.skills.forEach(skill => {
-            if (skillCounts.hasOwnProperty(skill)) {
-                skillCounts[skill]++;
-            }
-        });
+        // Defensive check: ensure entry.skills exists and is an array
+        if (Array.isArray(entry.skills)) {
+            entry.skills.forEach(skill => {
+                if (skillCounts.hasOwnProperty(skill)) {
+                    skillCounts[skill]++;
+                }
+            });
+        }
     });
 
     return skillCounts;
 }
+
 
 // Function to generate bar charts for skill progress
 function generateSkillProgressCharts() {

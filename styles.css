@@ -201,3 +201,17 @@ textarea {
 input[type="checkbox"] {
     margin-right: 10px;
 }
+
+/* Task Image Styling */
+.task-image {
+    float: left;
+    margin-right: 20px;
+    width: 100px; /* Set appropriate size for the images */
+    height: auto;
+    border-radius: 5px;
+}
+
+#quest-area div {
+    overflow: hidden; /* Ensure text flows around the image properly */
+    margin-bottom: 20px;
+}

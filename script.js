@@ -51,10 +51,10 @@ const quests = {
         {
             title: "Attend events, workshops, or external talks",
             type: "Professional Development",
-            description: "Participate in networking events, seminars, or inaugural professorial talks.",
+            description: "Participate in networking events, seminars, or inaugural professorial talks. AIME (Membrane Biochemistry) has their own podcast",
             skillTree: "Academic Excellence",
             reason: "These activities help you present yourself more effectively to potential employers.",
-            url: "https://www.aston.ac.uk/careers/find-a-job/researching-employers",
+            url: "https://www.youtube.com/@astonoriginals/videos",
             imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image5.jpg", //prof develop
             year: 1
         }

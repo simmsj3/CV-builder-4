@@ -21,7 +21,7 @@ const quests = {
             description: "Look for part-time job opportunities, either on-campus or off-campus or even explore summer internship possibilities in labs or biotech companies",
             skillTree: "Leadership & Teamwork",
             reason: "Work experience, even if not directly related to biochemistry, develops professional skills and demonstrates responsibility and time management.",
-            url: "https://astonfutures.aston.ac.uk/",
+            url: "https://www.aston.ac.uk/careers/get-experience/part-time-jobs-and-volunteering",
             imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image2.jpg", //pt job
             year: 1
         },

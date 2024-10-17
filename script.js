@@ -152,9 +152,6 @@ const quests = {
 };
 
 
-
-
-
 function showQuests(year) {
     const questArea = document.getElementById('quest-area');
     const skillsArea = document.getElementById('skills-progress-area');
@@ -180,34 +177,33 @@ function showQuests(year) {
         return;
     }
 
-  filteredQuests.forEach(quest => {
-    const questDiv = document.createElement('div');
-    const questEntries = completedQuests[quest.title] || [];
-    const entryCount = questEntries.length > 0 ? `(${questEntries.length} Entries)` : '';
+    filteredQuests.forEach(quest => {
+        const questDiv = document.createElement('div');
+        const questEntries = completedQuests[quest.title] || [];
+        const entryCount = questEntries.length > 0 ? `(${questEntries.length} Entries)` : '';
 
-    let linksHtml = '';
-    if (quest.links && quest.links.length > 0) {
-        quest.links.forEach(link => {
-            linksHtml += `<a href="${link.url}" target="_blank">${link.name}</a><br>`;
-        });
-    }
+        let linksHtml = '';
+        if (quest.links && quest.links.length > 0) {
+            quest.links.forEach(link => {
+                linksHtml += `<a href="${link.url}" target="_blank">${link.name}</a><br>`;
+            });
+        }
 
-    questDiv.innerHTML = `
-        <img src="${quest.imageUrl}" alt="${quest.title} image" class="task-image" style="width: 100px; height: auto; margin-right: 20px; float: left;">
-        <h4>${quest.title} ${entryCount}</h4>
-        <p><strong>Type:</strong> ${quest.type}</p>
-        <p>${quest.description}</p>
-        <p><strong>Skills Developed:</strong> ${quest.skillTree}</p>
-        <p><strong>Why it's Important:</strong> ${quest.reason}</p>
-        ${linksHtml}
-        <br><br>
-        <button onclick="openModal('${quest.title}')">Mark as Completed</button>
-        <div style="clear: both;"></div>
-    `;
-    questArea.appendChild(questDiv);
-});
-
-
+        questDiv.innerHTML = `
+            <img src="${quest.imageUrl}" alt="${quest.title} image" class="task-image" style="width: 100px; height: auto; margin-right: 20px; float: left;">
+            <h4>${quest.title} ${entryCount}</h4>
+            <p><strong>Type:</strong> ${quest.type}</p>
+            <p>${quest.description}</p>
+            <p><strong>Skills Developed:</strong> ${quest.skillTree}</p>
+            <p><strong>Why it's Important:</strong> ${quest.reason}</p>
+            ${linksHtml}
+            <br><br>
+            <button onclick="openModal('${quest.title}')">Mark as Completed</button>
+            <div style="clear: both;"></div>
+        `;
+        questArea.appendChild(questDiv);
+    });
+}
 
 // Modal handling
 const modal = document.getElementById("modal");
@@ -371,4 +367,6 @@ document.getElementById('anytime-btn').addEventListener('click', () => showQuest
 window.onload = function() {
     showQuests('year1'); // Default view is Year 1 quests
 };
+
+
 

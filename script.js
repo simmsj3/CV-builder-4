@@ -1,3 +1,8 @@
+// Declare all variables only once at the beginning of the script
+let completedQuests = JSON.parse(localStorage.getItem('completedQuests')) || {};
+let skillsProgress = JSON.parse(localStorage.getItem('skillsProgress')) || [];
+let incompleteQuests = JSON.parse(localStorage.getItem('incompleteQuests')) || {}; // Store incomplete quests
+
 const quests = {
     year1: [
         {
@@ -134,9 +139,8 @@ const quests = {
 };
 
 
-let completedQuests = JSON.parse(localStorage.getItem('completedQuests')) || {};
-let skillsProgress = JSON.parse(localStorage.getItem('skillsProgress')) || [];
-let incompleteQuests = JSON.parse(localStorage.getItem('incompleteQuests')) || {}; // Store incomplete quests
+
+
 
 // Show quests based on the selected year
 function showQuests(year) {
@@ -146,16 +150,25 @@ function showQuests(year) {
     questArea.style.display = "block";
     questArea.innerHTML = ''; // Clear existing quests
 
+    // Get the default quests for the selected year
     let filteredQuests = quests[year] || [];
 
-    // Handle incomplete quests rollover from the previous year
+    // Add incomplete quests from the previous year to the current year if available
     if (year > 1 && incompleteQuests[year - 1]) {
         filteredQuests = filteredQuests.concat(incompleteQuests[year - 1]);
         delete incompleteQuests[year - 1];  // Remove these tasks from the previous year
     }
 
-    filteredQuests = filteredQuests.filter(quest => !completedQuests[quest.title]); // Filter out completed quests
+    // Filter out completed quests so they are not shown again
+    filteredQuests = filteredQuests.filter(quest => !completedQuests[quest.title]);
 
+    // If no quests are left to show, display a message
+    if (filteredQuests.length === 0) {
+        questArea.innerHTML = "<p>No quests available for this year.</p>";
+        return;
+    }
+
+    // Display the filtered quests
     filteredQuests.forEach(quest => {
         const questDiv = document.createElement('div');
         const questEntries = completedQuests[quest.title] || [];
@@ -337,3 +350,4 @@ document.getElementById('anytime-btn').addEventListener('click', () => showQuest
 window.onload = function() {
     showQuests('year1'); // Default view is Year 1 quests
 };
+

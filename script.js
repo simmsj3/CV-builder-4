@@ -148,47 +148,13 @@ function showQuests(year) {
 
     let filteredQuests = quests[year] || [];
 
-    // Add incomplete quests from the previous year if available, but don't display them in the previous year again
+    // Handle incomplete quests rollover from the previous year
     if (year > 1 && incompleteQuests[year - 1]) {
         filteredQuests = filteredQuests.concat(incompleteQuests[year - 1]);
+        delete incompleteQuests[year - 1];  // Remove these tasks from the previous year
     }
 
-    filteredQuests.forEach(quest => {
-        const questDiv = document.createElement('div');
-        const questEntries = completedQuests[quest.title] || [];
-        const entryCount = questEntries.length > 0 ? `(${questEntries.length} Entries)` : '';
-
-        questDiv.innerHTML = `
-            <h4>${quest.title} ${entryCount}</h4>
-            <p><strong>Type:</strong> ${quest.type}</p>
-            <p>${quest.description}</p>
-            <p><strong>Skills Developed:</strong> ${quest.skillTree}</p>
-            <p><strong>Why it's Important:</strong> ${quest.reason}</p>
-            <a href="${quest.url}" target="_blank">Learn More</a>
-            <br><br>
-            <button onclick="openModal('${quest.title}')">Mark as Completed</button>
-        `;
-        questArea.appendChild(questDiv);
-    });
-}
-
-let completedQuests = JSON.parse(localStorage.getItem('completedQuests')) || {};
-let skillsProgress = JSON.parse(localStorage.getItem('skillsProgress')) || [];
-let incompleteQuests = JSON.parse(localStorage.getItem('incompleteQuests')) || {};
-
-// Show quests based on the selected year
-function showQuests(year) {
-    const questArea = document.getElementById('quest-area');
-    const skillsArea = document.getElementById('skills-progress-area');
-    skillsArea.style.display = "none";
-    questArea.style.display = "block";
-    questArea.innerHTML = ''; // Clear existing quests
-    let filteredQuests = quests[year] || [];
-    
-    // Add incomplete quests from previous years
-    if (incompleteQuests[year]) {
-        filteredQuests = filteredQuests.concat(incompleteQuests[year]);
-    }
+    filteredQuests = filteredQuests.filter(quest => !completedQuests[quest.title]); // Filter out completed quests
 
     filteredQuests.forEach(quest => {
         const questDiv = document.createElement('div');
@@ -262,7 +228,7 @@ function openModal(questTitle) {
 skillsForm.onchange = function() {
     const checkedSkills = Array.from(document.querySelectorAll('input[name="skills"]:checked')).map(el => el.value);
     let freeformHtml = '';
-    
+
     checkedSkills.forEach(skill => {
         freeformHtml += `
             <div>
@@ -298,10 +264,11 @@ function completeQuest(questTitle) {
     localStorage.setItem('completedQuests', JSON.stringify(completedQuests));
 
     // Remove from incomplete tasks if it exists
-    if (incompleteQuests[questTitle]) {
-        delete incompleteQuests[questTitle];
-        localStorage.setItem('incompleteQuests', JSON.stringify(incompleteQuests));
-    }
+    Object.keys(incompleteQuests).forEach(year => {
+        incompleteQuests[year] = incompleteQuests[year].filter(quest => quest.title !== questTitle);
+    });
+
+    localStorage.setItem('incompleteQuests', JSON.stringify(incompleteQuests));
 
     updateSkillsProgress(skillsSelected, evidence);
     modal.style.display = "none";
@@ -370,9 +337,3 @@ document.getElementById('anytime-btn').addEventListener('click', () => showQuest
 window.onload = function() {
     showQuests('year1'); // Default view is Year 1 quests
 };
-
-
-window.onload = function() {
-    showQuests('year1'); // Default view is Year 1 quests
-};
-

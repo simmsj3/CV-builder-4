@@ -54,7 +54,7 @@ const quests = {
             description: "Participate in networking events, seminars, or inaugural professorial talks. AIME (Membrane Biochemistry) has their own podcast",
             skillTree: "Academic Excellence",
             reason: "These activities help you present yourself more effectively to potential employers.",
-            url: "https://www.youtube.com/@astonoriginals/videos",
+          //  url: "https://www.youtube.com/@astonoriginals/videos",
             imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image5.jpg", //prof develop
             year: 1
         }

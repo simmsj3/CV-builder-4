@@ -134,7 +134,7 @@ const quests = {
 };
 
 
-let completedQuests = JSON.parse(localStorage.getItem('completedQuests')) || [];
+let completedQuests = JSON.parse(localStorage.getItem('completedQuests')) || {};
 let skillsProgress = JSON.parse(localStorage.getItem('skillsProgress')) || [];
 
 // Show quests based on the selected year
@@ -147,10 +147,12 @@ function showQuests(year) {
     const filteredQuests = quests[year];
 
     filteredQuests.forEach(quest => {
-        const isCompleted = completedQuests.some(q => q.title === quest.title);
         const questDiv = document.createElement('div');
+        const questEntries = completedQuests[quest.title] || [];
+        const entryCount = questEntries.length > 0 ? `(${questEntries.length} Entries)` : '';
+        
         questDiv.innerHTML = `
-            <h4>${quest.title} ${isCompleted ? '(Completed)' : ''}</h4>
+            <h4>${quest.title} ${entryCount}</h4>
             <p><strong>Type:</strong> ${quest.type}</p>
             <p>${quest.description}</p>
             <p><strong>Skills Developed:</strong> ${quest.skillTree}</p>
@@ -189,10 +191,20 @@ function completeQuest(questTitle) {
     const skillsSelected = Array.from(document.querySelectorAll('input[name="skills"]:checked')).map(el => el.value);
     const evidence = document.getElementById('evidence-text').value;
 
-    completedQuests.push({ title: questTitle, date: completionDate, skills: skillsSelected, evidence: evidence });
-    localStorage.setItem('completedQuests', JSON.stringify(completedQuests));
+    // Check if quest has been completed before, allow for multiple entries
+    if (!completedQuests[questTitle]) {
+        completedQuests[questTitle] = [];
+    }
     
+    completedQuests[questTitle].push({
+        date: completionDate,
+        skills: skillsSelected,
+        evidence: evidence
+    });
+
+    localStorage.setItem('completedQuests', JSON.stringify(completedQuests));
     updateSkillsProgress(skillsSelected, evidence);
+    
     modal.style.display = "none";
     showQuests('year1'); // Refresh the quest list
 }
@@ -238,3 +250,4 @@ document.getElementById('anytime-btn').addEventListener('click', () => showQuest
 window.onload = function() {
     showQuests('year1'); // Default view is Year 1 quests
 };
+

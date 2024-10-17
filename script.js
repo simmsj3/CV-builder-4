@@ -145,7 +145,7 @@ const quests = {
             skillTree: "Networking & Communication",
             reason: "A strong professional online presence showcases your seriousness about your career.",
             url: "https://www.aston.ac.uk/careers/cv/cvs-and-cover-letters",
-            imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image12.jpg", //linkedin
+            imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image10.jpg", //linkedin
             year: "anytime"
         }
     ]

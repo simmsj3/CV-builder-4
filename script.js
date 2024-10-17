@@ -143,7 +143,6 @@ const quests = {
 
 
 
-// Show quests based on the selected year
 function showQuests(year) {
     const questArea = document.getElementById('quest-area');
     const skillsArea = document.getElementById('skills-progress-area');
@@ -175,7 +174,9 @@ function showQuests(year) {
         const questEntries = completedQuests[quest.title] || [];
         const entryCount = questEntries.length > 0 ? `(${questEntries.length} Entries)` : '';
 
+        // Include the image and its alt text
         questDiv.innerHTML = `
+            <img src="${quest.imageUrl}" alt="${quest.title} image" class="task-image" style="width: 100px; height: auto; margin-right: 20px; float: left;">
             <h4>${quest.title} ${entryCount}</h4>
             <p><strong>Type:</strong> ${quest.type}</p>
             <p>${quest.description}</p>
@@ -184,10 +185,12 @@ function showQuests(year) {
             <a href="${quest.url}" target="_blank">Learn More</a>
             <br><br>
             <button onclick="openModal('${quest.title}')">Mark as Completed</button>
+            <div style="clear: both;"></div>
         `;
         questArea.appendChild(questDiv);
     });
 }
+
 
 // Modal handling
 const modal = document.getElementById("modal");

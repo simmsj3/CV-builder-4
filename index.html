@@ -6,6 +6,8 @@
     <title>Biochemistry CV Quest System</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <!-- Include Chart.js Library for skill progress -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
@@ -14,6 +16,7 @@
             <p>Select a year to view quests and track your progress:</p>
         </header>
         
+        <!-- Navigation for years and skills progress -->
         <nav>
             <button id="year1-btn">Year 1</button>
             <button id="year2-btn">Year 2</button>
@@ -22,6 +25,7 @@
             <button id="skills-tab-btn">Skills Progress</button>
         </nav>
 
+        <!-- Main content area for quests -->
         <main>
             <section id="quest-area">
                 <!-- Quests will be dynamically injected here -->
@@ -53,6 +57,10 @@
                     <label for="technical-proficiency">Technical Proficiency</label><br>
                     <input type="checkbox" id="networking-communication" name="skills" value="Networking & Communication">
                     <label for="networking-communication">Networking & Communication</label><br>
+                    <input type="checkbox" id="placements" name="skills" value="Placements">
+                    <label for="placements">Placements</label><br>
+                    <input type="checkbox" id="graduate-careers" name="skills" value="Graduate Careers">
+                    <label for="graduate-careers">Graduate Careers</label><br>
                     <label for="evidence-text">Provide evidence of these skills:</label><br>
                     <textarea id="evidence-text" rows="4" cols="50" placeholder="Write evidence for the skills you selected..."></textarea><br>
                     <button type="button" id="save-completion">Save</button>
@@ -60,6 +68,7 @@
             </div>
         </div>
 
+        <!-- Script linking -->
         <script src="script.js"></script>
     </div>
 </body>

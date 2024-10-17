@@ -180,28 +180,33 @@ function showQuests(year) {
         return;
     }
 
-    // Display the filtered quests
-    filteredQuests.forEach(quest => {
-        const questDiv = document.createElement('div');
-        const questEntries = completedQuests[quest.title] || [];
-        const entryCount = questEntries.length > 0 ? `(${questEntries.length} Entries)` : '';
+  filteredQuests.forEach(quest => {
+    const questDiv = document.createElement('div');
+    const questEntries = completedQuests[quest.title] || [];
+    const entryCount = questEntries.length > 0 ? `(${questEntries.length} Entries)` : '';
 
-        // Include the image and its alt text
-        questDiv.innerHTML = `
-            <img src="${quest.imageUrl}" alt="${quest.title} image" class="task-image" style="width: 100px; height: auto; margin-right: 20px; float: left;">
-            <h4>${quest.title} ${entryCount}</h4>
-            <p><strong>Type:</strong> ${quest.type}</p>
-            <p>${quest.description}</p>
-            <p><strong>Skills Developed:</strong> ${quest.skillTree}</p>
-            <p><strong>Why it's Important:</strong> ${quest.reason}</p>
-            <a href="${quest.url}" target="_blank">Learn More</a>
-            <br><br>
-            <button onclick="openModal('${quest.title}')">Mark as Completed</button>
-            <div style="clear: both;"></div>
-        `;
-        questArea.appendChild(questDiv);
-    });
-}
+    let linksHtml = '';
+    if (quest.links && quest.links.length > 0) {
+        quest.links.forEach(link => {
+            linksHtml += `<a href="${link.url}" target="_blank">${link.name}</a><br>`;
+        });
+    }
+
+    questDiv.innerHTML = `
+        <img src="${quest.imageUrl}" alt="${quest.title} image" class="task-image" style="width: 100px; height: auto; margin-right: 20px; float: left;">
+        <h4>${quest.title} ${entryCount}</h4>
+        <p><strong>Type:</strong> ${quest.type}</p>
+        <p>${quest.description}</p>
+        <p><strong>Skills Developed:</strong> ${quest.skillTree}</p>
+        <p><strong>Why it's Important:</strong> ${quest.reason}</p>
+        ${linksHtml}
+        <br><br>
+        <button onclick="openModal('${quest.title}')">Mark as Completed</button>
+        <div style="clear: both;"></div>
+    `;
+    questArea.appendChild(questDiv);
+});
+
 
 
 // Modal handling

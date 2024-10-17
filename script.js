@@ -182,11 +182,14 @@ function showQuests(year) {
         const questEntries = completedQuests[quest.title] || [];
         const entryCount = questEntries.length > 0 ? `(${questEntries.length} Entries)` : '';
 
+        // Handle multiple URLs for further information
         let linksHtml = '';
         if (quest.links && quest.links.length > 0) {
             quest.links.forEach(link => {
                 linksHtml += `<a href="${link.url}" target="_blank">${link.name}</a><br>`;
             });
+        } else if (quest.url) {
+            linksHtml = `<a href="${quest.url}" target="_blank">Learn More</a><br>`;
         }
 
         questDiv.innerHTML = `
@@ -196,7 +199,7 @@ function showQuests(year) {
             <p>${quest.description}</p>
             <p><strong>Skills Developed:</strong> ${quest.skillTree}</p>
             <p><strong>Why it's Important:</strong> ${quest.reason}</p>
-            ${linksHtml}
+            ${linksHtml} <!-- Correctly handles multiple and single links -->
             <br><br>
             <button onclick="openModal('${quest.title}')">Mark as Completed</button>
             <div style="clear: both;"></div>
@@ -204,6 +207,7 @@ function showQuests(year) {
         questArea.appendChild(questDiv);
     });
 }
+
 
 // Modal handling
 const modal = document.getElementById("modal");

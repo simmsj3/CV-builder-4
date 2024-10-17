@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biochemistry CV Quest System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Biochemistry CV Quest System</h1>
+            <p>Select a year to view quests and track your progress:</p>
+        </header>
+        
+        <nav>
+            <button id="year1-btn">Year 1</button>
+            <button id="year2-btn">Year 2</button>
+            <button id="year4-btn">Year 4</button>
+            <button id="anytime-btn">Anytime</button>
+            <button id="skills-tab-btn">Skills Progress</button>
+        </nav>
+
+        <main>
+            <section id="quest-area">
+                <!-- Quests will be dynamically injected here -->
+            </section>
+            <section id="skills-progress-area" style="display: none;">
+                <h3>Skills Progress</h3>
+                <div id="skills-content">
+                    <!-- Skills progress will be dynamically added here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Modal for marking a quest as completed -->
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close" id="modal-close">&times;</span>
+                <h3>Complete Quest</h3>
+                <label for="completion-date">Completion Date:</label>
+                <input type="date" id="completion-date" name="completion-date">
+                <h4>Select Skills Demonstrated</h4>
+                <form id="skills-form">
+                    <input type="checkbox" id="academic-excellence" name="skills" value="Academic Excellence">
+                    <label for="academic-excellence">Academic Excellence</label><br>
+                    <input type="checkbox" id="professional-skills" name="skills" value="Professional Skills">
+                    <label for="professional-skills">Professional Skills</label><br>
+                    <input type="checkbox" id="leadership-teamwork" name="skills" value="Leadership & Teamwork">
+                    <label for="leadership-teamwork">Leadership & Teamwork</label><br>
+                    <input type="checkbox" id="technical-proficiency" name="skills" value="Technical Proficiency">
+                    <label for="technical-proficiency">Technical Proficiency</label><br>
+                    <input type="checkbox" id="networking-communication" name="skills" value="Networking & Communication">
+                    <label for="networking-communication">Networking & Communication</label><br>
+                    <label for="evidence-text">Provide evidence of these skills:</label><br>
+                    <textarea id="evidence-text" rows="4" cols="50" placeholder="Write evidence for the skills you selected..."></textarea><br>
+                    <button type="button" id="save-completion">Save</button>
+                </form>
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+    </div>
+</body>
+</html>

@@ -22,6 +22,7 @@ const quests = {
             skillTree: "Leadership & Teamwork",
             reason: "Work experience, even if not directly related to biochemistry, develops professional skills and demonstrates responsibility and time management.",
             url: "https://astonfutures.aston.ac.uk/",
+            imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image2.jpg", //pt job
             year: 1
         },
         {
@@ -31,6 +32,7 @@ const quests = {
             skillTree: "Leadership & Teamwork",
             reason: "Personal projects showcase your initiative, creativity, and genuine interest in biochemistry beyond coursework.",
             url: "https://astonfutures.aston.ac.uk/",
+            imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image3.jpg", //personal project
             year: 1
         },
         {
@@ -43,6 +45,7 @@ const quests = {
                 { name: "Aston Clubs and Societies", url: "https://www.astonsu.com/activities/clubsandsocieties/" },
                 { name: "Biochemical Society", url: "https://www.biochemistry.org/" }
             ],
+            imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image4.jpg", //societies
             year: 1
         },
         {
@@ -52,6 +55,7 @@ const quests = {
             skillTree: "Academic Excellence",
             reason: "These activities help you present yourself more effectively to potential employers.",
             url: "https://www.aston.ac.uk/careers/find-a-job/researching-employers",
+            imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image5.jpg", //prof develop
             year: 1
         }
     ],

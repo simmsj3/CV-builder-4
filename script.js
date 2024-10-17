@@ -25,6 +25,19 @@ const quests = {
             imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image2.jpg", //pt job
             year: 1
         },
+
+        {
+            title: "Meet the Careers and Placements team",
+            type: "Professional Development",
+            description: "You may not need us yet, but it’s good to know we’re here. Visit the Careers and Placements Centre to meet the team and access our resources.",
+            skillTree: "Networking & Communication",
+            reason: "Getting to know what the team has to offer in terms of your future is a must!",
+            url: "https://www.aston.ac.uk/careers/contact-us",
+            imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image12.jpg", //personal project
+            year: 1
+        },
+             
+                
         {
             title: "Personal Projects",
             type: "Professional Development",
@@ -48,16 +61,67 @@ const quests = {
             imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image4.jpg", //societies
             year: 1
         },
+
+       {
+            title: "You can never start too early with placements",
+            type: "Professional Development",
+            description: "We know what you’re thinking: 12 months ahead… is it really necessary? Well, some big names will be opening placement applications very soon, so it’s never too early.  ",
+            skillTree: "Networking & Communication",
+            reason: "Many of the big employers have applications in October in your second year, fortune favours the best prepared ",
+            url: "https://www.aston.ac.uk/careers/placements",
+            imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image7.jpg", //personal project
+            year: 1
+        }, 
+        
+ {
+            title: "What are your options",
+            type: "Professional Development",
+            description: "It can be difficult to know where to start when you're trying to explore your options, so these resources are perfect for mapping everything out ",
+            skillTree: "Networking & Communication",
+            reason: "What motivates you? Where do your strengths lie? What’s your personality type? The careers and placements team's resources can help you answer these questions and more so that you can identify the careers that you’re most likely to succeed in and enjoy. ",
+            url: "https://www.aston.ac.uk/careers/which-career/explore-your-options",
+            imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image13.jpg", //personal project
+            year: 1
+        }, 
+        
+        
+        
         {
             title: "Attend events, workshops, or external talks",
             type: "Professional Development",
             description: "Participate in networking events, seminars, or inaugural professorial talks. AIME (Membrane Biochemistry) has their own podcast",
             skillTree: "Academic Excellence",
             reason: "These activities help you present yourself more effectively to potential employers.",
-          //  url: "https://www.youtube.com/@astonoriginals/videos",
+            url: "https://www.youtube.com/@astonoriginals/videos",
             imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image5.jpg", //prof develop
             year: 1
+        },
+
+{
+            title: "Over the Summer",
+            type: "Professional Development",
+            description: "    Find some part-time work to help you gain new skills and experience. Look into the various industries and occupations linked to your degree – it’s not always as one-way as you might think. And consider researching individual companies too, so you’ll be in a prime position to apply for placements.  Fit in some time for psychometric tests and look into assessment centres. They’re often used in applications for placements and internships, so practising will help you feel more relaxed. ",
+            skillTree: "Networking & Communication",
+            reason: "These activities help you present yourself more effectively to potential employers.",
+            url: "https://www.aston.ac.uk/careers/cv/psychometric-testing-and-assessment-centres",
+            imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image14.jpg", //prof develop
+            year: 1
+        },
+
+        {
+            title: "Prefer something to listen to?",
+            type: "Professional Development",
+            description: "A set of podcasts with all you need to know about placements and that next step!",
+            skillTree: "Networking & Communication",
+            reason: "These activities help you present yourself more effectively to potential employers.",
+            url: "https://open.spotify.com/episode/6ZpVkF69yhvKVIgXLEG1RS?go=1&sp_cid=5df2047112549f4a26a0823bacc37db7&utm_source=embed_player_p&utm_medium=desktop&nd=1&dlsi=9b01fe069b91443d",
+            imageUrl: "https://raw.githubusercontent.com/simmsj3/CV-builder-4/main/images/image15.jpg", //prof develop
+            year: 1
         }
+
+
+
+        
     ],
     year2: [
         {

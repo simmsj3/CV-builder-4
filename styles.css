@@ -66,6 +66,8 @@ aside {
     padding: 10px;
     background-color: #eee;
     border-radius: 5px;
+    position: relative;
+    width: 100%;
 }
 
 .progress::before {
@@ -74,7 +76,6 @@ aside {
     width: 0;
     height: 10px;
     background-color: #4CAF50;
-    margin-top: 5px;
     border-radius: 5px;
 }
 
